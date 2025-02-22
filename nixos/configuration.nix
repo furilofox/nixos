@@ -171,7 +171,7 @@
       "\\\${HOME}/.steam/root/compatibilitytools.d";
   };
   
-  hardware.logitech.wireless.enable = true;
+  # hardware.logitech.wireless.enable = true;
 
   environment.systemPackages = with pkgs; [
     vim
@@ -192,8 +192,8 @@
     nextcloud-client
     telegram-desktop
     git
-    solaar
-    gnomeExtensions.solaar-extension
+    # solaar # needs sudo to see mouse, idk what the actual buttons are called
+    # gnomeExtensions.solaar-extension
   ];
 
   networking = {
