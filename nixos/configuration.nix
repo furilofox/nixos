@@ -163,8 +163,15 @@
     gamescopeSession.enable = true;
   };
 
-  xdg.portal.enable = true;
-  # xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  xdg = {
+  portal = {
+    enable = true;
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-wlr
+      xdg-desktop-portal-gtk
+    ];
+  };
+};
   
   programs.gamemode.enable = true;
 
