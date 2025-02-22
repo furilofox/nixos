@@ -190,6 +190,7 @@
     nextcloud-client
     telegram-desktop
     git
+    solaar
   ];
 
   networking = {
