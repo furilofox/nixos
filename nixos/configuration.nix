@@ -185,7 +185,6 @@
     vesktop			# discord + vencord
     _1password-gui		# 1Password Desktop
     mission-center		# Task / System Monitor
-    nvtopPackages.nvidia
     gnome-extension-manager
     vscode
     brave
