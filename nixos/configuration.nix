@@ -136,9 +136,9 @@
   # Graphics / Nvidia
   # ============================================== #
   
-  # hardware.graphics = {
-  #   enable = true;
-  # };
+  hardware.graphics = {
+    enable = true;
+  };
 
   # nvidia configuration
   hardware.nvidia = {
