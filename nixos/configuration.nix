@@ -170,6 +170,8 @@
     STEAM_EXTRA_COMPAT_TOOLS_PATHS =
       "\\\${HOME}/.steam/root/compatibilitytools.d";
   };
+  
+  hardware.logitech.wireless.enable
 
   environment.systemPackages = with pkgs; [
     vim
