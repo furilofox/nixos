@@ -193,6 +193,7 @@
     telegram-desktop
     git
     solaar
+    gnomeExtensions.solaar-extension
   ];
 
   networking = {
