@@ -171,7 +171,7 @@
       "\\\${HOME}/.steam/root/compatibilitytools.d";
   };
   
-  hardware.logitech.wireless.enable
+  hardware.logitech.wireless.enable = true;
 
   environment.systemPackages = with pkgs; [
     vim
