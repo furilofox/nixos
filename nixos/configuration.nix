@@ -176,7 +176,7 @@
     wget
     mangohud			# Game Hardware stats
     protonup 			# "protonup" in terminal to download proton-ge
-    lutris 			# great game launcher
+    # lutris 			# great game launcher
     heroic 			# good for epicgames
     bottles			# windows app container
     vesktop			# discord + vencord
