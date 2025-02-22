@@ -19,13 +19,13 @@
   # Networking
   # ============================================== #
   
-  # networking = {
-  #   hostName = "fabian-desktop";
-  #   networkmanager = {
-  #     enable = true;
-  #   };
-  #   nameservers = [ "1.1.1.1" "8.8.8.8" ];
-  # };
+  networking = {
+    hostName = "fabian-desktop";
+    networkmanager = {
+      enable = true;
+    };
+    nameservers = [ "1.1.1.1" "8.8.8.8" ];
+  };
   
   # ============================================== #
   # Localization
@@ -90,14 +90,14 @@
   # ============================================== #
   
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  # users.users.fabian = {
-  #   isNormalUser = true;
-  #   description = "Fabian";
-  #   extraGroups = [ "networkmanager" "wheel" ];
-  #   packages = with pkgs; [
-  #   #  thunderbird
-  #   ];
-  # };
+  users.users.fabian = {
+    isNormalUser = true;
+    description = "Fabian";
+    extraGroups = [ "networkmanager" "wheel" ];
+    packages = with pkgs; [
+    #  thunderbird
+    ];
+  };
   
   
   # ============================================== #
