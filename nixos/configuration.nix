@@ -162,16 +162,6 @@
     dedicatedServer.openFirewall = true;
     gamescopeSession.enable = true;
   };
-
-  xdg = {
-  portal = {
-    enable = true;
-    extraPortals = with pkgs; [
-      xdg-desktop-portal-wlr
-      xdg-desktop-portal-gtk
-    ];
-  };
-};
   
   programs.gamemode.enable = true;
 
