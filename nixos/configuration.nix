@@ -156,8 +156,6 @@
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
   
-  services.xserver.videoDrivers = ["nvidia"];
-  
   # ============================================== #
   # Steam / Gaming
   # ============================================== #
@@ -176,10 +174,14 @@
   
   programs.gamemode.enable = true;
 
-  # For protonup, sets its base folder
   environment.sessionVariables = {
-    STEAM_EXTRA_COMPAT_TOOLS_PATHS =
-      "\\\${HOME}/.steam/root/compatibilitytools.d";
+    STEAM_EXTRA_COMPAT_TOOLS_PATHS = "${HOME}/.steam/root/compatibilitytools.d";
+    # Force Wayland for Chromium based applications
+    NIXOS_OZONE_WL = "1";
+    # Force Wayland for vscode
+    ELECTRON_OZONE_PLATFORM_HINT = "wayland";
+    # Force Wayland for firefox
+    MOZ_ENABLE_WAYLAND=1;
   };
   
   # hardware.logitech.wireless.enable = true;
