@@ -199,8 +199,6 @@
     nextcloud-client
     telegram-desktop
     git
-    # solaar # needs sudo to see mouse, idk what the actual buttons are called
-    # gnomeExtensions.solaar-extension
   ];
 
   networking = {
