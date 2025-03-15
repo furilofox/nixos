@@ -1,13 +1,36 @@
-# module1.nix
+{ config, pkgs, lib, ... }:
 
-{ pkgs, lib, config, ... }: {
-
-  options = {
-    module1.enable = 
-      lib.mkEnableOption "enables module1";
+{
+  brave = {
+    enable = {
+      type = lib.types.bool;
+      default = false;
+      description = "Enable brave installation and configuration.";
+    };
+    autostart = {
+      type = lib.types.bool;
+      default = false;
+      description = "Enable brave to autostart on login.";
+    };
   };
 
-  config = lib.mkIf config.module1.enable {
-    option1 = 5;
-    option2 = true;
+  config = lib.mkIf config.brave.autostart {
+    # If autostart is enabled, also enable the package
+    brave.enable = true;
+
+    systemd.user.services.brave = {
+      description = "brave";
+      wantedBy = [ "graphical-session.target" ];
+      after = [ "graphical-session.target" ];
+      serviceConfig = {
+        ExecStart = "brave %U";
+        Restart = "on-failure";
+      };
+    };
+  }
+  lib.mkIf config.brave.enable {
+    home.packages = [
+      pkgs.brave
+    ];
   };
+}

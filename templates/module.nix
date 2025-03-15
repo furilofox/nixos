@@ -1,43 +1,39 @@
 { config, pkgs, lib, ... }:
 
-# TODO: Replace "module-name"
-# TODO: Setup or Remove Autostart Option
-# TODO: Set "Package-Name"
+# TODO: Replace ${moduleName}
+# TODO: Replace ${packageName}
 
 {
-  options.module-name = {
+  ${moduleName} = {
     enable = {
       type = lib.types.bool;
       default = false;
-      description = "Enable module-name.";
+      description = "Enable ${packageName} installation and configuration.";
     };
     autostart = {
       type = lib.types.bool;
       default = false;
-      description = "Enable App to autostart on login.";
+      description = "Enable ${packageName} to autostart on login.";
     };
   };
 
-  config = lib.mkIf config.module-name.autostart {
+  config = lib.mkIf config.${moduleName}.autostart {
+    # If autostart is enabled, also enable the package
+    ${moduleName}.enable = true;
 
-    module-name.enable = true; 
-
-    # TODO: Setup for this app, example for Discord
-    systemd.user.services.discord = {
-      description = "Discord";
+    systemd.user.services.${packageName} = {
+      description = "${packageName}";
       wantedBy = [ "graphical-session.target" ];
       after = [ "graphical-session.target" ];
       serviceConfig = {
-        ExecStart = "${pkgs.vesktop}/opt/discord/discord";
+        ExecStart = "${pkgs.${packageName}}/bin/${packageName}"; #TODO: Adjust path if needed
         Restart = "on-failure";
       };
     };
   }
-
-  # TODO: Set Name
-  lib.mkIf config.module-name.enable {
+  lib.mkIf config.${moduleName}.enable {
     home.packages = [
-      pkgs.Package-Name
+      pkgs.${packageName}
     ];
   };
 }

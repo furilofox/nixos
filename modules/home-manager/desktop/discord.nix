@@ -15,7 +15,6 @@
   };
 
   config = lib.mkIf config.vesktop.autostart {
-
     vesktop.enable = true;
 
     systemd.user.services.vesktop = {
@@ -23,11 +22,12 @@
       wantedBy = [ "graphical-session.target" ];
       after = [ "graphical-session.target" ];
       serviceConfig = {
-        ExecStart = "${pkgs.vesktop}/bin/vesktop";
+        ExecStart = "vesktop %U";
         Restart = "on-failure";
       };
     };
   }
+
   lib.mkIf config.vesktop.enable {
     home.packages = [
       pkgs.vesktop
