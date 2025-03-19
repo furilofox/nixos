@@ -200,7 +200,6 @@
     telegram-desktop
     git
     obsidian
-    ntopng
     # solaar # needs sudo to see mouse, idk what the actual buttons are called
     # gnomeExtensions.solaar-extension
   ];
