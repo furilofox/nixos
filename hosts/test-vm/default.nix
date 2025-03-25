@@ -88,7 +88,6 @@
     enable = true;
     displayManager.gdm.enable = true;
     desktopManager.gnome.enable = true;
-    videoDrivers = ["nvidia"];
     xkb = {
       layout = "de";
       variant = "";
@@ -122,53 +121,9 @@
     enable = true;
   };
 
-  # nvidia configuration
-  hardware.nvidia = {
-    modesetting.enable = true;
-    powerManagement.enable = false;
-    powerManagement.finegrained = false;
-    open = true;
-    nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
-  };
-  
-  # ============================================== #
-  # Steam / Gaming
-  # ============================================== #
-  
-  programs.gamescope = {
-    enable = true;
-    capSysNice = true;
-  };
-  
-  programs.steam = {
-    enable = true;
-    remotePlay.openFirewall = true;
-    localNetworkGameTransfers.openFirewall = true;
-    gamescopeSession.enable = true;
-  };
-  
-  programs.gamemode.enable = true;
-
-  environment.sessionVariables = {
-    STEAM_EXTRA_COMPAT_TOOLS_PATHS = "\\\${HOME}/.steam/root/compatibilitytools.d";
-    # Force Wayland for Chromium based applications
-    NIXOS_OZONE_WL = "1";
-    # Force Wayland for vscode
-    ELECTRON_OZONE_PLATFORM_HINT = "wayland";
-    # Force Wayland for firefox
-    MOZ_ENABLE_WAYLAND=1;
-  };
-  
-  # hardware.logitech.wireless.enable = true;
-
   environment.systemPackages = with pkgs; [
     vim
     wget
-    mangohud			# Game Hardware stats
-    protonup 			# "protonup" in terminal to download proton-ge
-    lutris 			# great game launcher
-    heroic 			# good for epicgames
     bottles			# windows app container
     _1password-gui		# 1Password Desktop
     mission-center		# Task / System Monitor
