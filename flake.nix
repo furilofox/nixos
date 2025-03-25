@@ -40,10 +40,7 @@
     inherit lib;
     nixosModules = import ./modules/nixos;
     homeManagerModules = import ./modules/home-manager;
-
-    overlays = import ./overlays {inherit inputs outputs;};
-
-    packages = forEachSystem (pkgs: import ./pkgs {inherit pkgs;});
+    
     devShells = forEachSystem (pkgs: import ./shell.nix {inherit pkgs;});
 
     nixosConfigurations = {
@@ -54,14 +51,9 @@
           inherit inputs outputs;
         };
       };
-    };
-
-    homeConfigurations = {
-      # Main desktop
-      "fabian@main-desktop" = lib.homeManagerConfiguration {
-        modules = [./home/fabian/main-desktop.nix];
-        pkgs = pkgsFor.x86_64-linux;
-        extraSpecialArgs = {
+      test-vm = lib.nixosSystem {
+        modules = [./hosts/test-vm];
+        specialArgs = {
           inherit inputs outputs;
         };
       };
