@@ -204,6 +204,19 @@
     # gnomeExtensions.solaar-extension
   ];
 
+  programs.virt-manager.enable = true;
+  users.groups.libvirtd.members = ["fabian"];
+  virtualisation.libvirtd.enable = true;
+  virtualisation.spiceUSBRedirection.enable = true;
+  dconf.settings = {
+    "org/virt-manager/virt-manager/connections" = {
+      autoconnect = ["qemu:///system"];
+      uris = ["qemu:///system"];
+    };
+  };
+  services.qemuGuest.enable = true;
+  services.spice-vdagentd.enable = true;  # enable copy and paste between host and guest
+
   networking = {
     hostName = "fabian-desktop";
     networkmanager = {
@@ -216,7 +229,7 @@
     fabian = {
       initialPassword = "12345678";
       isNormalUser = true;
-      extraGroups = [ "networkmanager" "wheel" ];
+      extraGroups = [ "networkmanager" "wheel" "libvirtd" ];
     };
   };
 
