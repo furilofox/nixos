@@ -197,7 +197,26 @@
     nextcloud-client
     telegram-desktop
     git
+    obsidian
+    virt-manager
+    virt-viewer
   ];
+
+  programs.dconf.enable = true;
+  virtualisation = {
+    libvirtd = {
+      enable = true;
+      qemu = {
+        swtpm.enable = true;
+        ovmf.enable = true;
+        ovmf.packages = [ pkgs.OVMFFull.fd ];
+      };
+    };
+    spiceUSBRedirection.enable = true;
+  };
+  users.groups.libvirtd.members = ["fabian"];
+  services.qemuGuest.enable = true;
+  services.spice-vdagentd.enable = true;  # enable copy and paste between host and guest
 
   networking = {
     hostName = "fabian-desktop";
@@ -211,10 +230,10 @@
     fabian = {
       initialPassword = "12345678";
       isNormalUser = true;
-      extraGroups = [ "networkmanager" "wheel" ];
+      extraGroups = [ "networkmanager" "wheel" "libvirtd"];
     };
   };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-  system.stateVersion = "23.05";
+  system.stateVersion = "24.11";
 }
