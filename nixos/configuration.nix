@@ -203,7 +203,12 @@
 
     virt-manager
     virt-viewer
+
     spice
+    spice-gtk # Might be needed for client-side rendering in Virt Manager
+    libvirt # Ensure libvirt is installed
+    qemu # Ensure QEMU is installed
+
     # solaar # needs sudo to see mouse, idk what the actual buttons are called
     # gnomeExtensions.solaar-extension
   ];
