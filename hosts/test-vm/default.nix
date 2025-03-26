@@ -157,7 +157,7 @@
   services.spice-vdagentd.enable = true;  # enable copy and paste between host and guest
 
   networking = {
-    hostName = "fabian-desktop";
+    hostName = "fabian-vm";
     networkmanager = {
       enable = true;
     };

@@ -58,5 +58,26 @@
         };
       };
     };
+
+    homeConfigurations = {
+      # Main desktop
+      "fabian@main-desktop" = lib.homeManagerConfiguration {
+        modules = [./home/fabian/main-desktop.nix];
+        pkgs = pkgsFor.x86_64-linux;
+        extraSpecialArgs = {
+          inherit inputs outputs;
+        };
+      };
+
+      # Main desktop
+      "fabian@test-vm" = lib.homeManagerConfiguration {
+        modules = [./home/fabian/test-vm.nix];
+        pkgs = pkgsFor.x86_64-linux;
+        extraSpecialArgs = {
+          inherit inputs outputs;
+        };
+      };
+    };
+
   };
 }
