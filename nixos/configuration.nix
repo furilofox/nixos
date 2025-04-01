@@ -45,6 +45,7 @@
       allowUnfree = true;
       permittedInsecurePackages = [
         "curl-7.47.0"
+        "openssl-1.0.1u"
       ];
     };
   };
