@@ -43,10 +43,6 @@
     # Configure your nixpkgs instance
     config = {
       allowUnfree = true;
-      permittedInsecurePackages = [
-        "curl-7.47.0"
-        "openssl-1.0.1u"
-      ];
     };
   };
 
@@ -212,8 +208,6 @@
     spice-gtk # Might be needed for client-side rendering in Virt Manager
     libvirt # Ensure libvirt is installed
     qemu # Ensure QEMU is installed
-
-    ideamaker
 
     # solaar # needs sudo to see mouse, idk what the actual buttons are called
     # gnomeExtensions.solaar-extension
