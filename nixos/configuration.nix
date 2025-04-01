@@ -43,6 +43,9 @@
     # Configure your nixpkgs instance
     config = {
       allowUnfree = true;
+      permittedInsecurePackages = [
+        "curl-7.47.0"
+      ];
     };
   };
 
