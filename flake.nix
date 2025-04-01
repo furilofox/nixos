@@ -12,72 +12,55 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # TODO: Implement Impermanence
-    impermanence.url = "github:nix-community/impermanence";
+    # TODO: Implement Secrets
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # TODO: Customize System
-    nix-colors.url = "github:misterio77/nix-colors";
+    nix-colors = {
+      url = "github:misterio77/nix-colors";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # TODO: Implement Impermanence
+    impermanence = {
+      url = "github:nix-community/impermanence";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
-    self,
-    nixpkgs,
-    home-manager,
-    systems,
-    ...
+    self, nixpkgs, home-manager, sops-nix, nix-colors, impermanence, alejandra, ... 
   } @ inputs: let
     inherit (self) outputs;
-    lib = nixpkgs.lib // home-manager.lib;
-    forEachSystem = f: lib.genAttrs (import systems) (system: f pkgsFor.${system});
-    pkgsFor = lib.genAttrs (import systems) (
-      system:
-        import nixpkgs {
-          inherit system;
-          config.allowUnfree = true;
-        }
-    );
+    systems = [
+      "aarch64-linux"
+      "i686-linux"
+      "x86_64-linux"
+      "aarch64-darwin"
+      "x86_64-darwin"
+    ];
+    forAllSystems = nixpkgs.lib.genAttrs systems;
   in {
-    inherit lib;
+    formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
+
     nixosModules = import ./modules/nixos;
     homeManagerModules = import ./modules/home-manager;
-    
-    devShells = forEachSystem (pkgs: import ./shell.nix {inherit pkgs;});
 
     nixosConfigurations = {
       # Main desktop
       main-desktop = lib.nixosSystem {
-        modules = [./hosts/main-desktop];
-        specialArgs = {
-          inherit inputs outputs;
-        };
+        modules = [./hosts/main-desktop/configuration.nix];
+        specialArgs = { inherit inputs outputs; };
       };
+
+      # VM for Testing without risking Main System
       test-vm = lib.nixosSystem {
-        modules = [./hosts/test-vm];
-        specialArgs = {
-          inherit inputs outputs;
-        };
+        modules = [./hosts/test-vm/configuration.nix];
+        specialArgs = { inherit inputs outputs; };
       };
     };
-
-    homeConfigurations = {
-      # Main desktop
-      "fabian@main-desktop" = lib.homeManagerConfiguration {
-        modules = [./home/fabian/main-desktop.nix];
-        pkgs = pkgsFor.x86_64-linux;
-        extraSpecialArgs = {
-          inherit inputs outputs;
-        };
-      };
-
-      # Main desktop
-      "fabian@test-vm" = lib.homeManagerConfiguration {
-        modules = [./home/fabian/test-vm.nix];
-        pkgs = pkgsFor.x86_64-linux;
-        extraSpecialArgs = {
-          inherit inputs outputs;
-        };
-      };
-    };
-
   };
 }
