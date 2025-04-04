@@ -209,6 +209,8 @@
     libvirt # Ensure libvirt is installed
     qemu # Ensure QEMU is installed
 
+    prismlauncher
+
     # solaar # needs sudo to see mouse, idk what the actual buttons are called
     # gnomeExtensions.solaar-extension
   ];
