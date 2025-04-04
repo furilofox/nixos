@@ -62,5 +62,23 @@
         specialArgs = { inherit inputs outputs; };
       };
     };
+
+    homeConfigurations = {
+      "fabian@main-desktop" = lib.homeManagerConfiguration {
+        modules = [ ./home/fabian/main-desktop.nix ./home/fabian/nixpkgs.nix ];
+        pkgs = pkgsFor.x86_64-linux;
+        extraSpecialArgs = {
+          inherit inputs outputs;
+        };
+      };
+
+      "fabian@test-vm" = lib.homeManagerConfiguration {
+        modules = [ ./home/fabian/test-vm.nix ./home/fabian/nixpkgs.nix ];
+        pkgs = pkgsFor.x86_64-linux;
+        extraSpecialArgs = {
+          inherit inputs outputs;
+        };
+      };
+    };
   };
 }
