@@ -1,11 +1,12 @@
 {
-  description = "My NixOs configuration";
+  description = "My NixOS configuration";
 
   inputs = {
     # Nix ecosystem
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.11";
     systems.url = "github:nix-systems/default-linux";
+    hardware.url = "github:nixos/nixos-hardware";
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -32,48 +33,65 @@
   };
 
   outputs = {
-    self, nixpkgs, home-manager, sops-nix, nix-colors, impermanence, alejandra, ... 
+    self,
+    nixpkgs,
+    home-manager,
+    systems,
+    ...
   } @ inputs: let
     inherit (self) outputs;
-    systems = [
-      "aarch64-linux"
-      "i686-linux"
-      "x86_64-linux"
-      "aarch64-darwin"
-      "x86_64-darwin"
-    ];
-    forAllSystems = nixpkgs.lib.genAttrs systems;
+    lib = nixpkgs.lib // home-manager.lib;
+    forEachSystem = f: lib.genAttrs (import systems) (system: f pkgsFor.${system});
+    pkgsFor = lib.genAttrs (import systems) (
+      system:
+        import nixpkgs {
+          inherit system;
+          config.allowUnfree = true;
+        }
+    );
   in {
-    formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
-
+    inherit lib;
     nixosModules = import ./modules/nixos;
     homeManagerModules = import ./modules/home-manager;
 
+    formatter = forEachSystem (pkgs: pkgs.alejandra);
+
+    # Names used are Moons, Current and Future Names:
+    # Used: luna, europa
+    # Unused: callisto, rhea, mimas, triton, hyperion, phobos, pandora, atlas, titan
+
     nixosConfigurations = {
       # Main desktop
-      main-desktop = lib.nixosSystem {
-        modules = [./hosts/main-desktop/configuration.nix];
-        specialArgs = { inherit inputs outputs; };
+      luna = lib.nixosSystem {
+        modules = [./hosts/luna];
+        specialArgs = {
+          inherit inputs outputs;
+        };
       };
 
-      # VM for Testing without risking Main System
-      test-vm = lib.nixosSystem {
-        modules = [./hosts/test-vm/configuration.nix];
-        specialArgs = { inherit inputs outputs; };
+      # Test VM
+      europa = lib.nixosSystem {
+        modules = [./hosts/europa];
+        specialArgs = {
+          inherit inputs outputs;
+        };
       };
+
     };
 
     homeConfigurations = {
-      "fabian@main-desktop" = lib.homeManagerConfiguration {
-        modules = [ ./home/fabian/main-desktop.nix ./home/fabian/nixpkgs.nix ];
+      # Main desktop
+      "fabian@luna" = lib.homeManagerConfiguration {
+        modules = [ ./home/fabian/luna.nix ./home/fabian/nixpkgs.nix ];
         pkgs = pkgsFor.x86_64-linux;
         extraSpecialArgs = {
           inherit inputs outputs;
         };
       };
 
-      "fabian@test-vm" = lib.homeManagerConfiguration {
-        modules = [ ./home/fabian/test-vm.nix ./home/fabian/nixpkgs.nix ];
+      # Test VM
+      "fabian@europa" = lib.homeManagerConfiguration {
+        modules = [ ./home/fabian/europa.nix ./home/fabian/nixpkgs.nix ];
         pkgs = pkgsFor.x86_64-linux;
         extraSpecialArgs = {
           inherit inputs outputs;
