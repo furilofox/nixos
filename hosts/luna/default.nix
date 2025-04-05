@@ -10,8 +10,8 @@
   imports = [
     ./hardware-configuration.nix
 
-    ../common/global
     ../common/users/fabian.nix
+    ../common/global/default.nix
 
     ../common/optional/systemd-boot.nix
     ../common/optional/gnome.nix

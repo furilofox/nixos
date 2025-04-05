@@ -8,7 +8,7 @@
 
   users.users.fabian = {
       isNormalUser = true;
-      extraGroups = ifTheyExist [ 
+      extraGroups = [ 
         "networkmanager"
         "wheel"
         "libvirtd" 
