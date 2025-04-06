@@ -22,13 +22,11 @@
     # TODO: Customize System
     nix-colors = {
       url = "github:misterio77/nix-colors";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # TODO: Implement Impermanence
     impermanence = {
       url = "github:nix-community/impermanence";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
