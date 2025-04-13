@@ -69,16 +69,5 @@
       };
 
     };
-
-    # Available through 'home-manager --flake .#username@hostname'
-    homeConfigurations = {
-      # Main desktop
-      "fabian@luna" = lib.homeManagerConfiguration {
-        modules = [ ./home/fabian/luna.nix ./home/fabian/nixpkgs.nix ];
-        pkgs = pkgsFor.x86_64-linux;
-        extraSpecialArgs = { inherit inputs outputs; };
-      };
-
-    };
   };
 }
