@@ -11,17 +11,6 @@
     ./hardware-configuration.nix
 
     inputs.home-manager.nixosModules.home-manager
-
-    ../common/global/default.nix
-    ../common/users/fabian.nix
-
-    ../common/optional/systemd-boot.nix
-    ../common/optional/gnome.nix
-    ../common/optional/opengl.nix
-    ../common/optional/nvidia.nix
-
-    ../common/optional/pipewire.nix
-    ../common/optional/printing.nix
   ];
 
   home-manager = {
